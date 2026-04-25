@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+
+    <script type="text/javascript" src="validatorlite.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ResMan Onboarding</title>
+    <style type="text/css">
+        .is-invalid, .error {
+            border-color: red;
+            color: red;
+        }
+
+        .feedback {
+            display: none;
+        }
+
+        .feedback.loading,
+        .feedback.is-invalid {
+            display: inline-block !important;
+        }
+
+        label.feedback.is-valid {
+            display: none !important;
+        }
+
+        .loading {
+            color: dodgerblue;
+        }
+        .codeblock {
+            padding: 10px 0px 6px 10px;
+            margin: 0px;
+            background-color: var(--bs-secondary-bg-subtle);
+        }
+        .form-holder {
+            padding-top: 10px;
+            padding-bottom: 14px;
+            background-color: var(--bs-primary-bg-subtle);
+        }
+        button {
+            margin: 10px !important;
+        }
+    </style>
+</head>
+<body style="margin: 30px;">
+    <h1>Welcome to ValidatorLite</h1>
+    <p><em>ValidatorLite</em> is a light weight, single file HTML 5 / javascript library for adding validation to HTML 5 forms.</p>
+    <p>While <a href="https://jquery.com/">jQuery</a> and <a href="https://getbootstrap.com/">Bootstrap</a> are not required, this sample file does make use of them.</p>
+    <p>
+        The library itself uses the HTML 5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Constraint_validation" target="_blank">Constraint Validation API</a>
+        but expands on it with some new attributes.
+    </p>
+    <p>
+        To use <em>ValidatorLite</em>, include the script in your HTML file, add the <samp>novalidation</samp> attribute to your form and initialize <em>ValidatorLite</em> on your form element.
+        <div class="text-left rounded-3 codeblock">
+            <pre>&lt;form id=&quot;MyForm&quot; name=&quot;MyForm&quot; novalidation&gt;
+    &lt;input id=&quot;TextBox1&quot; name=&quot;TextBox1&quot; type=&quot;text&quot; placeholder=&quot;TextBox1&quot; /&gt;
+    &lt;button id=&quot;SubmitButton&quot; name=&quot;SubmitButton&quot;&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    (const | var | let) myNewValidator = new ValidatorLite(&quot;MyForm&quot;);
+&lt;/script&gt;</pre>
+        </div>
+    </p>
+    <p>
+        The standard behavior for <em>ValidatorLite</em> is to create a new label with the class of &ldquo;feedback&rdquo; for the fields being validated, then it will append the label to the field.
+        <em>ValidatorLite</em> will then add <var>onblur</var> events to each <var>input</var> and <var>select</var> element on the form and an <var>onsubmit</var> handler for the form itself.
+        The <var>onblur</var> handler calls the default <var>checkValidity()</var> method of the element and adds the &ldquo;is-valid&rdquo; or &ldquo;is-invalid&rdquo;
+        class to the element itself and all labels linked to the element using the <var>for</var> attribute.
+        The <var>onsubmit</var> handler does the same thing but also prevents the form from being submitted if any of the fields are invalid.
+    </p>
+
+    <form id="BasicFormNoVal" onsubmit="return false;">
+        <div class="form-holder row col-lg-6 rounded-3">
+            <div class="row">
+                <p>Simple form using Bootstrap and standard HTML 5 browser validation</p>
+                <div class="form-group form-group-sm col-md-6">
+                    <label class="form-label" for="FirstName">First Name*</label>
+                    <input class="form-control" id="FirstName"
+                           required
+                           pattern="[A-z]+"
+                           name="FirstName" type="text" value="" placeholder="First name" />
+                </div>
+                <div class="form-group form-group-sm col-md-6">
+                    <label class="form-label" for="LastName">Last Name*</label>
+                    <input class="form-control" id="LastName"
+                           required
+                           pattern="[A-z]+"
+                           name="LastName" type="text" value="" placeholder="Last name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group form-group-sm">
+                    <label class="form-label" for="EmailAddress">Email*</label>
+                    <input class="form-control" inputmode="email"
+                           required
+                           id="EmailAddress" name="EmailAddress" type="email" value="" placeholder="Email address" />
+                </div>
+            </div>
+            <div class="col-lg-6 row">
+                <button id="Submit" class="btn btn-primary" onclick="this.submit()">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+    <p>&nbsp;</p>
+    <form id="BasicFormValLite" novalidate>
+        <div class="form-holder row col-lg-6 rounded-3">
+            <div class="row">
+                <p>Simple form using <em>ValidatorLite</em> with Bootstrap and basic CSS styling</p>
+                <div class="form-group form-group-sm col-md-6">
+                    <label class="form-label" for="FirstName1">First Name*</label>
+                    <input class="form-control" id="FirstName1"
+                           required
+                           pattern="[A-z]+"
+                           name="FirstName" type="text" value="" placeholder="First name" />
+                </div>
+                <div class="form-group form-group-sm col-md-6">
+                    <label id="LastName1Label" class="form-label" for="LastName1">Last Name*</label>
+                    <input class="form-control" id="LastName1"
+                           required
+                           pattern="[A-z]+"
+                           name="LastName" type="text" value="" placeholder="Last name" />
+                </div>
+                <div class="row">
+                    <div class="form-group form-group-sm">
+                        <label class="form-label" for="EmailAddress1">Email*</label>
+                        <input class="form-control" inputmode="email"
+                               required
+                               id="EmailAddress1" name="EmailAddress1" type="email" value="" placeholder="Email address " />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 row">
+                <button id="Submit1" class="btn btn-primary" onclick="this.submit()">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        let myForm = document.getElementById("BasicFormValLite");
+        let myBasicFormValLite = new ValidatorLite(myForm);
+        myForm.addEventListener("submit", (e) => {
+            alert("FORM SUBMITTED!");
+            e.preventDefault();
+        });
+    </script>
+    <p>&nbsp;</p>
+    <p>
+        <em>ValidatorLite</em> will add two new methods to each element found by calling <var>form.querySelectAll</var> with the <var>fieldselector</var> configuration (defaults to &ldquo;input,select,textarea&rdquo;). The two new methods are:
+        <ul>
+            <li><code>reportValidityLite()</code> Updates the UI for the selected element</li>
+            <li>
+                <code>checkValidityLite(<var>report</var> = <var>false</var>)</code> Return <var>true</var> or <var>false</var> after combining the default <var>checkValidity()</var> with
+                any custom validation functionality. If <var>report</var> is <var>true</var>, <var>reportValidityLite()</var> will also be called on the element
+            </li>
+        </ul>
+    </p>
+    <p>
+        These are the standard <em>Constraint Validation API</em> attributes that are supported by <em>ValidatorLite</em>:
+        <ul>
+            <li><code>novalidation</code> This is set on the form itself or individual elements, this needs to be set in order to use the custom validation in <em>ValidatorLite</em></li>
+            <li><code>required:</code> Ensures the field is not empty.</li>
+            <li><code>pattern:</code> Uses a Regular Expression (RegEx) to validate the input format (e.g., pattern="[0-9]{3}" for three digits).</li>
+            <li><code>type:</code> Automatically validates common formats like email, url, and number.</li>
+            <li><code>min / max / step:</code> Restricts the range and increments of numeric or date inputs. <em>(Currently not supported)</em></li>
+            <li><code>minlength / maxlength:</code> Controls the number of characters allowed. <em>(Currently not supported)</em></li>
+        </ul>
+    </p>
+    <p>
+        These are custom <code>data-</code> attributes used by <em>ValidatorLite</em>
+        <ul>
+            <li><code>data-vl-no-report</code> Add this attribute (does not require a value) to suspend updating the UI for this element. Defaults to <var>false</var> in the configuration for all fields</li>
+            <li><code>data-vl-add-feedback</code> Set to any value and a new label element will be created and added to the DOM. Defaults to <var>true</var> in the configuration for all fields </li>
+            <li>
+                <code>data-vl-feedback-id</code> The <samp>id</samp> of an element that will be used to display the relevant message. This also prevents <em>ValidatorLite</em>
+                from creating a new label. The element pointed to here will be used for all messaging and styling
+            </li>
+            <li>
+                <code>data-vl-keep-text</code> The text in the corresponding feedback element will not be altered. Should be used with <code>data-vl-feedback-id</code>,
+                otherwise the default text of the newly created label (blank) will always be kept. Use this if you have a static error message you want to use for every case.
+                Defaults to <var>false</var> in the configuration for every field
+            </li>
+            <li>
+                <code>data-vl-append-text</code> The corresponding validation message will be appended, with a leading space, to the initial text of the feedback element. Again,
+                use this with <code>data-vl-feedback-id</code> to display a dynamic message that begins with the initial text of the feedback element
+            </li>
+
+            <li>
+                <code>data-vl-custom-validator</code> The name of a function to be called when validating. <em>ValidatorLite</em> wraps the function call in a promise and expects a return of
+                either <var>true</var> or <var>false</var>. Use <var>async</var> and <var>await</var> if you need to make any asynchronous calls inside the function
+            </li>
+            <li>
+                <code>data-vl-remote-url</code> The remote URL that will be called for validation. <em>ValidatorLite</em> uses the <var>fetch</var> promise to check for a success response.
+                If there is an error or the response status is not &ldquo;OK&rdquo;, the field is marked as invalid and the <var>remote</var> message is displayed.
+                If you need to make a remote call and then manipulate the data that is returned, use <code>data-vl-custom-validator</code> with the <var>async</var> and <var>await</var> keywords.
+                The <var>loading</var> class will be added to the feedback element and the <var>loading</var> message will be displayed while awaiting the <var>fetch</var>
+            </li>
+            <li><code>data-vl-remote-method</code> the method to be used for the <code>data-vl-remote-url</code>. Defaults to &ldquo;GET&rdquo; </li>
+            <li>
+                <code>data-vl-remote-fields</code> a comma seperated list of field ids that will make up the data for the remote <var>fetch</var>.
+                If the <code>data-vl-remote-method</code> is set to &ldquo;POST&rdquo;, the fields will be included as JSON objects in the data parameter. Otherwise the field names and values
+                will be converted to name = value pairs and included in the URL
+            </li>
+        </ul>
+    </p>
+    <p>
+        The default messages for each validation can be modified in the configuration or on the elements themselves. The default messages and their <code>data-</code> attributes are as follows:
+    <ul>
+        <li><code>data-vl-custom-message</code> Custom validation returned false</li>
+        <li><code>data-vl-required-message</code> This field is required</li>
+        <li><code>data-vl-pattern-message</code> The field did not match the expected pattern</li>
+        <li><code>data-vl-type-message</code> The field did not match the expected type</li>
+        <li><code>data-vl-success-message</code> Empty by default</li>
+        <li><code>data-vl-remote-message</code> The remote call failed</li>
+        <li><code>data-vl-loading-message</code> Loading...</li>
+    </ul>
+    </p>
+    <p>
+        This is the default configuration for <em>ValidatorLite</em>:
+<pre style="color: var(--bs-code-color);">{
+    onblur: true,
+    onsubmit: true,
+    report: true,
+    feedbackplacement: "after",
+    fieldselector: "input,select,textarea",
+    css: {
+        error: "is-invalid",
+        success: "is-valid",
+        loading: "loading",
+        feedback: "feedback"
+    },
+    messages: {
+        custom: "Custom validation returned false",
+        required: "This field is required",
+        pattern: "The field did not match the expected pattern",
+        type: "The field did not match the expected type",
+        success: "",
+        remote: "The remote call failed",
+        loading: "Loading...",
+        minlength: "The minimum length of the field has not been met"
+    }
+}</pre>
+    </p>
+    <p>
+        <ul>
+            <li>
+                <code>onblur:</code> Used with <code>report</code>, adds an <em>&ldquo;onblur&rdquo;</em> event listener to the field,
+                which triggers validation when the field loses focus.
+            </li>
+            <li>
+                <code>onsubmit:</code> Adds an <em>&ldquo;onsubmit&rdquo;</em> event listener to the form, which triggers validation when the form is submitted.
+                This will also prevent the form from being submitted if any fields are invalid.
+            </li>
+            <li><code>report</code> Determines whether to update the UI by default. Setting this to false and leaving <code>onblur</code> true could cause some unusual side-effects</li>
+            <li><code>feedbackplacement</code> Expects either <var>before</var> or <var>after</var>, which determines where the feedback element will be placed relative to the field.</li>
+            <li><code>fieldselector</code> The CSS selector that will be used on the form to retrieve all the elements for validation</li>
+        </ul>
+    </p>
+</body>
+</html>
