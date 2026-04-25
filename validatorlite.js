@@ -23,6 +23,7 @@ function ValidatorLite(form, overrideConfig) {
             success: "",
             remote: "The remote call failed",
             loading: "Loading...",
+            compare: "The fields do not match",
             minlength: "The minimum length of the field has not been met"
         }
     };
@@ -153,6 +154,9 @@ function ValidatorLite(form, overrideConfig) {
                             errorMessage = (element.getAttribute("data-vl-loading-message")) ? element.getAttribute("data-vl-loading-message") : ValidatorLite.config.messages.loading;
                             errorClass = ValidatorLite.config.css.loading;
                             break;
+                        case "COMPARE":
+                            errorMessage = (element.getAttribute("data-vl-compare-message")) ? element.getAttribute("data-vl-compare-message") : ValidatorLite.config.messages.compare;
+                            break;
                     }
                 } else if (element.validity.valueMissing) {
                     errorMessage = (element.getAttribute("data-vl-required-message")) ? element.getAttribute("data-vl-required-message") : ValidatorLite.config.messages.required;
@@ -262,6 +266,15 @@ function ValidatorLite(form, overrideConfig) {
                         ValidatorLite.reportLite(myElement);
                 });
         }
+
+        if (isValid && myElement.hasAttribute("data-vl-compare-to")) {
+            let compareElement = document.getElementById(myElement.getAttribute("data-vl-compare-to"));
+            if (myElement.value !== compareElement.value) {
+                myElement.setCustomValidity("COMPARE");
+                isValid = false;
+            }
+        }
+
         if (report)
             ValidatorLite.reportLite(myElement);
 
