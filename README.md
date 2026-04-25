@@ -5,6 +5,4 @@
     The library itself uses the HTML 5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Constraint_validation" target="_blank">Constraint Validation API</a>
     but expands on it with some new attributes.
 </p>
-    <p>
-        To use <em>ValidatorLite</em>, include the script in your HTML file, add the <samp>novalidation</samp> attribute to your form and initialize <em>ValidatorLite</em> on your form element.</p>
-<p>Please see ValidatorLiteReadMe.html in the repository for more information and examples</p>
+<p>For further documentation and examples, click <a href="ValidatorLiteReadMe.html">here</a></p>
