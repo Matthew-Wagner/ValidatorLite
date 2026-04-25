@@ -192,7 +192,9 @@
                 <code>data-vl-append-text</code> The corresponding validation message will be appended, with a leading space, to the initial text of the feedback element. Again,
                 use this with <code>data-vl-feedback-id</code> to display a dynamic message that begins with the initial text of the feedback element
             </li>
-
+            <li>
+                <code>data-vl-compare-to</code> The id of the field to compare against. Useful for password confirmation fields, etc.
+            </li>
             <li>
                 <code>data-vl-custom-validator</code> The name of a function to be called when validating. <em>ValidatorLite</em> wraps the function call in a promise and expects a return of
                 either <var>true</var> or <var>false</var>. Use <var>async</var> and <var>await</var> if you need to make any asynchronous calls inside the function
@@ -220,6 +222,7 @@
         <li><code>data-vl-type-message</code> The field did not match the expected type</li>
         <li><code>data-vl-success-message</code> Empty by default</li>
         <li><code>data-vl-remote-message</code> The remote call failed</li>
+        <li><code>data-vl-compare-message</code> The fields do not match</li>
         <li><code>data-vl-loading-message</code> Loading...</li>
     </ul>
     </p>
